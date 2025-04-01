@@ -28,16 +28,11 @@ resource "aws_nat_gateway" "nat_vannbora" {
 
 resource "aws_route_table" "route_table_private" {
   vpc_id = aws_vpc.virtual_vannbora_cloud.id
-
-  route { 
-    cidr_block = "10.0.0.128/25"
-    gateway_id = aws_internet_gateway.ig_vannbora.id
-   }
 }
 
 resource "aws_route" "private_internet" {
   route_table_id         = aws_route_table.route_table_private.id
-  destination_cidr_block = "10.0.0.0/24"
+  destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id =      aws_nat_gateway.nat_vannbora.id
 }
 
@@ -53,7 +48,7 @@ resource "aws_route_table" "route_table_public" {
   vpc_id = aws_vpc.virtual_vannbora_cloud.id
 
   route { 
-    cidr_block = "10.0.0.0/25"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.ig_vannbora.id
    }
 
@@ -64,9 +59,10 @@ resource "aws_route_table" "route_table_public" {
 
 resource "aws_route" "public_internet" {
   route_table_id         = aws_route_table.route_table_public.id
-  destination_cidr_block = "10.0.0.0/24"
+  destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.ig_vannbora.id
 }
+
 
 resource "aws_route_table_association" "tabela_publica" {
   subnet_id = var.variable_subnet_id_public
@@ -84,7 +80,7 @@ resource "aws_network_acl" "acl_vannbora" {
     action = "allow"
     from_port   = "22"
     to_port     = "22"
-    protocol    = "-1"
+    protocol    = "tcp"
     cidr_block = "0.0.0.0/0"
     }
 
@@ -93,7 +89,7 @@ resource "aws_network_acl" "acl_vannbora" {
     action = "allow"
     from_port   = "22"
     to_port     = "22"
-    protocol    = "-1"
+    protocol    = "tcp"
     cidr_block = "0.0.0.0/0"
     }
 
