@@ -4,6 +4,6 @@ output "id_vpc" {
 }
 
 output "instance_security_grupo" {
-  value = aws_network_acl.acl_vannbora.id
+  value = aws_security_group.vannbora_sg.id
   description = "value of the security group"
 }

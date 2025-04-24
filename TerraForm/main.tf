@@ -1,9 +1,9 @@
 module "ec2" {
   source = "./ec2/"
+  instance_security_grupo = module.vpc.instance_security_grupo
   instance_vpc = module.vpc.id_vpc
   instance_public_subnet = module.public_subnet_terraform.id_subnet
   instance_private_subnet = module.private_subnet_terraform.id_subnet
-  # instance_security_grupo = module.vpc.instance_security_grupo.id
 }
 
 module "vpc" {
