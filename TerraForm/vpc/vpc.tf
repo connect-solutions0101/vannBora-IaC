@@ -40,6 +40,16 @@ resource "aws_nat_gateway" "nat_vannbora" {
 
 resource "aws_route_table" "route_table_private" {
   vpc_id = aws_vpc.virtual_vannbora_cloud.id
+
+  route{
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_vannbora.id
+  }
+
+  tags = {
+    Name = "nat_gatway_terraform"
+  }
+  
 }
 resource "aws_route_table_association" "private_internet" {
   route_table_id = aws_route_table.route_table_private.id
